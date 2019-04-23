@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			var object = {
+					"gender" : "M",
+					"age" : "50",
+					"Height" : "180",
+					"*~!@@#$#$%^\n&%^&*^&*" : "gender",
+					"Nation" : "Korea",
+					"Code" : null
+			};
+			
+			var x = object;
+			var y = {};
+			
+			function show1(property) {
+				switch(property) {
+					case "gender" : return f1;
+					case "age" : return f2;
+					case "Height" : return f3;
+					default : return new Function("str", "return 10 + str;");
+				}
+			}
+			
+			function f1() {
+				return 1;
+			}
+			
+			var f2 = function() {
+				return 2;
+			}
+			
+			function f3() {
+				return 3;
+			}
+		</script>
+		
+		<script type="text/javascript">
+			// 속성 값을 가지고 연산이 가능
+			console.log(object.age);
+			console.log(object.age * 4);
+			console.log(object.Height);
+			
+			// 속성 값 변경
+			object.age = 40;
+			console.log(object.age);
+			console.log(object.age * 5);
+			
+			// 기존에 없는 속성을 추가 (동적으로 추가)
+			object.date = "2019.04.23";
+			console.log(object.date);
+			
+			// 속성 값은 특수문자도 가능
+			console.log(object["*~!@@#$#$%^\n&%^&*^&*"]);
+			console.log(object["**"]);
+			
+			// 객체를 참조하는 번수가 기존에 없는 속성을 추가 (동적으로 추가)
+			x.genter = "F";
+			console.log(object.genter);
+			console.log(x.gender);
+			
+			// 다른 객체를 가리키는 경우
+			console.log(object.Code);
+			console.log(x.Code);
+			
+			// 없는 속성 값 접근 시
+			console.log(y["Code"]);
+			
+			// function pointer 가능
+			console.log(show1(object["*~!@@#$#$%^\n&%^&*^&*"]));	// 함수 자체를 return
+			console.log(show1(object["*~!@@#$#$%^\n&%^&*^&*"])());	// 함수의 실행 결과를 return
+			
+			console.log(show1(object["**"]));
+			console.log(show1(object["**"])(x.age));
+			console.log(show1(object["**"])(x.gender));
+			
+			// 해당 객체의 정보를 얻어오기
+			console.log(object.valueOf());
+		</script>
+	</head>
+	<body>
+		<!-- 전역 객체 : 미리 만들어진 객체 (Date, ...) -->
+		<!-- 객체의 접근 : 객체.속성  또는 객체["속성"] -->
+	</body>
+</html>

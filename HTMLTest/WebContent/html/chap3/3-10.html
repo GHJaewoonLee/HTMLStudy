@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<!-- 서버에 전송을 할 때에는 양식에 맞게 보내야 함. 따라서 form 키워드 사용 -->
+		<form name="testform" method="GET">
+			<ul type="none">
+				<fieldset>
+					<legend>아이디 비밀번호 전화번호 전송 초기화</legend>
+						<li>
+							<!-- input : 입력 창 -->
+						
+							<!-- size : 텍스트 상자 크기 -->
+							<!-- maxLength : 입력 가능한 길이의 최대값 -->
+							<!-- value : 초기값 -->
+							
+							<!-- text : 일반 입력 -->
+							<label for="id">아이디</label>
+							<input type="text" name="id" id="id" size="30" maxlength="30" value="Input Email">
+						</li>
+						
+						<li>
+							<!-- password : 비밀번호 입력 (입력한 값을 알 수 없음) -->
+							<label for="pass">비밀번호</label>
+							<input type="password" name="pass" id="pass" size="30" maxlength="30">
+						</li>
+						
+						<li>
+							<!-- submit : 서버에 현재 form을 제출 -->
+							<input type="submit" value="Login">
+							
+							<!-- reset : 현재 입력된 모든 값을 초기 값으로 변경 (value가 설정되어 있다면 설정된 값으로 초기화) -->
+							<input type="reset" value="Cancel">
+						</li>
+						
+						<li>
+							<!-- search : 텍스트 상자 오른쪽의 X버튼으로 입력한 값을 지울 수 있음 -->
+							<label for="name">이름</label>
+							<input type="search" name="name" id="name" size="30" maxlength="30" value="예) 홍길동">
+						</li>
+						
+						<!-- url/email/tel : 모바일 환경의 키보드 자판 구성에서 차이가 있음 -->
+						
+						<li>
+							<!-- url : URL을 입력 -->
+							<label for="url">URL</label>
+							<input type="url" name="url" id="url" size="100" value="예) https://www.naver.com">
+						</li>
+						
+						<li>
+							<!-- email : 이메일 주소 입력 -->
+							<label for="email">이메일</label>
+							<input type="email" name="email" id="email" size="50" value="예) naver@kitri.re.kr">
+						</li>
+						
+						<li>
+							<!-- tel : 전화번호 입력 -->
+							<label for="tel">전화번호</label>
+							<input type="tel" name="tel" id="tel" size="30" maxlength="13" value="예) 010-0101-1010">
+						</li>
+						
+						<li>
+							<!-- number : 증감이 가능한 버튼이 오른쪽에 생성 -->
+							<label for="num">갯수</label>
+							<input type="number" name="num" id="num" size="10" maxlength="3" step="3">
+						</li>
+						
+						<li>
+							<!-- range : 증감이 가능한 스크롤바가 생성 -->
+							<!-- 명시적으로 선언하지 않으면 min : 0, max : 100 -->
+							<label for="count">카운트</label>
+							<input type="range" name="count" id="count" size="10" min="0" max="100" step="4">
+						</li>
+						
+						<li>
+							<label for="channel">선호채널</label>
+							<select id="channel" name="channel" size="7" multiple="multiple">
+								<optgroup label="Odd">
+									<option value="1">1
+									<option value="3" selected="selected">3
+									<option value="5" selected="selected">5
+									<option value="7">7
+								</optgroup>
+								<optgroup label="Even">
+									<option value="2">2
+									<option value="4">4
+									<option value="6">6
+								</optgroup>
+							</select>
+						</li>
+						
+						<li>
+							<!-- textarea 태그로 둘러싸인 부분은 tag가 적용되지 않음. -->
+							<textarea rows="20" cols="20">가나다라마바사</textarea>
+							<!-- disabled : 입력이 불가능 -->
+							<textarea rows="20" cols="20" disabled="disabled">가나다라마바사
+							비활성화
+							</textarea>
+						</li>
+				</fieldset>
+			</ul>	
+		</form>
+	</body>
+</html>

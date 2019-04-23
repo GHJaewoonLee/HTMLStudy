@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			function alertOpen() {
+				alert("알림창");
+			}
+			
+			function confirmOpen() {
+				if(confirm("Delete?")) {
+					console.log("Deleted");
+				} else {
+					console.log("Canceled");
+				}
+			}
+		
+			function promptOpen() {
+				var txt = prompt("Type name", "");
+				console.log("The name is " + txt);
+			}
+			
+			function myOpen() {
+				// 이미 창이 떠 있는 경우 그 창일 보여줌. (새로운 창을 다시 띄우지 않음)
+				window.open("/JavaScriptTest/chap4/my.html", "Test", "width=400, height=300, top=200, left=300");
+			}
+		</script>
+		<script type="text/javascript">
+			// 사용자의 정보를 얻어 옮. 기기 정보에 따라 다른 웹 페이지를 가도록 할 경우에 유용
+			console.log(navigator.userAgent);
+			
+			// reload() : 새로고침
+			// setTimeout() : 함수를 1번만 호출
+			// setInterval() : 주기적으로 함수를 호출
+		</script>
+	</head>
+	<body>
+		<button onclick="javascript:alertOpen();">알림창</button>
+		<button onclick="javascript:confirmOpen();">확인창</button>
+		<button onclick="javascript:promptOpen();">입력창</button>
+		<button onclick="javascript:myOpen();">새창열기</button><br>
+		span 메시지 : <span id="view" style="background-color: cyan"></span>
+		div 메시지 : <div style="background-color: green">Hello</div>
+		p 메시지 : <p style="background-color: blue">Hello</p>
+	</body>
+</html>

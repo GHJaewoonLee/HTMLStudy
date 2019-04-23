@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<form name="testform" method="GET">
+			<table align="center" width="500" height="350" border="1">
+				<caption>
+					<h2>form control test - 회원가입</h2>
+				</caption>
+				<colgroup>
+					<col span="1" width="150">
+				</colgroup>
+				<tr>
+					<td align="center">이름</td>
+					<td><input type="text" name="name" id="name" size="20" maxlength="5"></td>
+				</tr>
+					<td align="center">아이디</td>
+					<td>
+						<input type="text" name="name" id="name" size="20">
+						<input type="button" value="중복확인">
+					</td>
+				<tr>
+					<td align="center">비밀번호</td>
+					<td><input type="password" name="pass" id="pass" size="20"></td>
+				</tr>
+					<td align="center">비밀번호확인</td>
+					<td><input type="password" name="passck" id="passck" size="20"></td>
+				<tr>
+					<td align="center">성별</td>
+					<td>
+						<label><input type="radio" name="gender" value="남">남</label>
+						<label><input type="radio" name="gender" value="여" checked="checked">여</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">좋아하는 과일</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<label><input type="checkbox" name="fruit" value="사과">사과</label>
+						<label><input type="checkbox" name="fruit" value="수박" checked="checked">수박</label>
+						<label><input type="checkbox" name="fruit" value="딸기">딸기</label>
+						<label><input type="checkbox" name="fruit" value="포도">포도</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">이메일</td>
+					<td><input type="email" name="emailid" id="emailid" size="10"> @ 
+						<select id="ed" name="emaildomain" size="1">
+							<option value="@naver.com">네이버</option>
+							<option value="@hanmail.net">다음</option>
+							<option value="@google.com">구글</option>
+							<option value="@nate.com">네이트</option>
+							<option value="@">직접입력</option>
+						</select>
+						<input type="text" name="emaildomain" id="emaildomain" size="10">
+					</td>
+				</tr>
+				<tr>
+					<td align="center">연락처</td>
+					<td><select id="tel1" name="tel1" size="1">
+							<option value="02">02</option>
+							<option value="031">031</option>
+							<option value="032">032</option>
+							<option value="033">033</option>
+							<option value="041">041</option>
+							<option value="042">042</option>
+							<option value="043">043</option>
+							<option value="044">044</option>
+							<option value="051">051</option>
+							<option value="052">052</option>
+							<option value="053">053</option>
+							<option value="054">054</option>
+							<option value="055">055</option>
+							<option value="061">061</option>
+							<option value="062">062</option>
+							<option value="063">063</option>
+							<option value="064">064</option>
+						</select> - 
+						<input type="tel" name="tel2" id="tel2" size="5" maxlength="4"> - 
+						<input type="tel" name="tel3" id="tel3" size="5" maxlength="4">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="button" value="회원가입">
+						<input type="reset" value="초기화">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

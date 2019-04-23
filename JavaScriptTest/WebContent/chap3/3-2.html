@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript">
+			function func1(num) {
+				var sum = 0;
+				
+				for (var i = 1; i <= num; i++) {
+					sum += i;
+				}
+				
+				console.log(sum);
+			}
+			
+			var func2 = function(num) {
+				var sum = 0;
+				
+				for (var i = 1; i <= num; i++) {
+					sum += i;
+				}
+				
+				console.log(sum);
+			}
+			
+			var func3 = new Function("num", "var sum = 0;\n" +
+									 "for (var i = 1; i <= num; i++) {" +
+										 "sum += i;" +
+									 "}\n" +
+									 "console.log(sum);");
+		</script>
+		<script type="text/javascript">
+			func1(10);
+			func2(10);
+			func3(10);
+			func3(); // undefined
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
