@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Event Test</title>
+		<script type="text/javascript">
+			window.onload = function() {
+				document.getElementById("click").onclick = function() {
+					alert("Click");
+				};
+				
+				document.getElementById("this").onclick = function() {
+					alert("this");
+				};
+				
+				document.getElementById("text").addEventListener("click", function() { alert("text"); }, false);
+			}
+		</script>
+	</head>
+	<body>
+		<span id="click">Click</span> <span id="this">this</span> <span id="text">text</span>
+	</body>
+</html>

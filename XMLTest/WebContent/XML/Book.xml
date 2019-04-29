@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- book : 하나 이상 -->
+<!-- kind : 필수 (IT, 소설, 잡지) (기본값 : IT) -->
+<!-- id는 isbn : 유일값으로 -->
+<!-- description : 옵션 -->
+<!-- name : name 또는 writer -->
+<!-- gender : (남, 여) (기본값 : 남) -->
+
+<!DOCTYPE booklist SYSTEM "Book.dtd">
+
+<booklist>
+	<book isbn="Sick">
+		<title>아프니까 아프다</title>
+		<author>
+			<name gender="남">안아픔</name>
+			<tel>010-0000-0000</tel>
+			<address>서울특별시 여의도동 국회대로 11길 23-65</address>
+		</author>
+		<publisher>대박출판사</publisher>
+		<price>15000</price>
+		<description>읽으면 안아파질 수 있음</description>
+	</book>
+	
+	<book isbn="Fashion" kind="잡지">
+		<title>월간패션</title>
+		<author>
+			<writer gender="여">구영희</writer>
+			<tel>010-1111-2222</tel>
+			<address>부산광역시 해운대구 54-324</address>
+		</author>
+		<publisher>쪽박출판사</publisher>
+		<price>20000</price>
+	</book>
+</booklist>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>DOM Test</title>
+		<script type="text/javascript">
+			// css : 일괄 적용이 가능
+			//       클래스를 참조할 떄에는 . 을 사용
+			
+			// 정규표현식 : 숫자만 입력 / 영어만 입력 / ...  좀 더 정확하게 유효성 검사를 하고 싶을 때
+			
+			// "Enter"의 아스키 코드 값 : 13
+			
+			var idx = 0;
+			var span;
+			
+			// 호출될 때마다 텍스트 입력창 생성
+			function appendAnswer() {
+				idx++;
+				
+				// 텍스트 입력 창 생성 및 속성 지정 
+				var ip = document.createElement("input");	// <input>
+				ip.setAttribute("type", "text");			// <input type="text">
+				ip.setAttribute("name", "answer");			// <input type="text" name="answer">
+				
+				// 삭제 버튼 추가 + 이벤트 지정
+				var btn = document.createElement("input");
+				btn.setAttribute("type", "button");
+				btn.setAttribute("value", "Delete");
+				btn.setAttribute("onclick", "deleteAnswer(" + idx + ");");
+				
+				// div 생성 + id 지정
+				var div = document.createElement("div");
+				div.setAttribute("id", "answer" + idx);
+
+				// 생성된 텍스트 입력 창 및 버튼 추가
+				div.appendChild(ip);
+				div.appendChild(btn);
+				
+				span = document.getElementById("answerDiv");
+ 				span.appendChild(div);
+			}
+			
+			function deleteAnswer(i) {
+				var delDiv = document.getElementById("answer" + i);
+				if (delDiv != null) {
+					//delDiv.parentNode.removeChild(delDiv);
+					span.removeChild(delDiv);
+				}
+			}
+			
+			function makePoll() {
+				if (document.getElementById("question").value == "") {
+					alert("Please type question");
+					return;
+				}
+				
+				var answer = document.getElementsByName("answer");	// type of result : array
+				for (var i = 0; i < answer.length; i++) {
+					if (answer[i].value == "") {
+						alert("Please type answer");
+						return;
+					}
+				}
+				
+// 				document.poll.action = "http://www.naver.com";
+// 				document.poll.submit();
+
+				var form = document.getElementById("poll");
+				form.setAttribute("action", "http://www.naver.com");
+				form.submit();
+				
+// 				$("#poll").attr("action", "http://www.naver.com").submit();
+			}
+		</script>
+		<style type="text/css">
+			table {
+				width: 300px;
+				border: 1px solid lightgray;
+			}
+			
+			td {
+				border: 1px solid green;
+				font-family: 굴림;
+				font-size: 11pt;
+				font-weight: bold;
+			}
+			
+			.td1 {
+				background-color: orange;
+				text-align: center;
+			}
+			
+			.td2 {
+				background-color: red;				
+			}
+		</style>
+	</head>
+	<body>
+		<div align="center">
+			<h3>설문조사 만들기</h3>
+			<form name="poll" id="poll" action="" onsubmit="return false;">
+				<table>
+					<tr>
+						<td class="td1">질문</td>
+						<td class="td2"><input type="text" name="question" id="question"></td>
+					</tr>
+					<tr>
+						<td class="td1" valign="top">
+							답변<br>
+							<button onclick="javascript:appendAnswer();">추가</button>
+						</td>
+						<td class="td2">
+							<div><input type="text" name="answer" id="answer"></div>
+							<div id="answerDiv"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="td1" colspan="2">
+							<button onclick="javascript:makePoll();">만들기</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

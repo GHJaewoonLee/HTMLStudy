@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 문법 정의 -->
+<!-- DOCTYPE 뒤에는 반드시 root element가 와야 함 -->
+<!DOCTYPE book[
+	<!ELEMENT book (title, author, price, description?)>
+	<!ELEMENT title (#PCDATA)>
+	<!ELEMENT author (#PCDATA)>
+	<!ELEMENT price (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+]>
+
+<book>
+	<title>Java &amp; XML</title>
+	<author>홍길동</author>
+	<price>30000</price>
+</book>
