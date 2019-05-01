@@ -2,7 +2,12 @@ package com.kitri.basic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.NumberFormat;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+//import java.text.NumberFormat;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +23,116 @@ public class Counter extends HttpServlet {
 	int cnt;
 	int totalLen;
 	
+	
+	// Load driver
+	public Counter() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Driver loading Failed.");
+		}
+	}
+	
+	
+	// Connect to DB
+	public Connection makeConnection() throws SQLException {
+		Connection conn = null;
+		conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.14.52:1521:orcl", "kitri", "kitri");
+		return conn;
+	}
+	
+	// Close SQL objects.
+	private void closeDB(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception occurs while closing.");
+		}
+	}
+	
+	// Search specified table.
+	// If 1, table find. Else , table not find.
+	private int findTable(String tableName) {
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = makeConnection();
+			
+			String sql = "";
+			sql += "select count(*) exist ";
+			sql += "from all_tables ";
+			sql += "where table_name = '" + tableName.toUpperCase() + "'";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				result = rs.getInt("exist");
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception occurs while find table.");
+		} finally {
+			closeDB(conn, pstmt, rs);
+		}
+		
+		return result;
+	}
+	
+	// 1. Search 'counter' table
+	// 2. if find, get no.
+	// 		2-1) if get, cnt = no;
+	//		2-2) else, cnt = 0;
+	// 3. else, cnt = 0;
 	@Override
 	public void init() throws ServletException {
-		cnt = 0;
 		totalLen = 8;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			int result = findTable("counter");
+
+			conn = makeConnection();
+			
+			if (result == 1) {
+				String sql = "";
+				sql += "select no ";
+				sql += "from counter";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				rs = pstmt.executeQuery();
+				
+				if (rs.next()) {
+					cnt = rs.getInt("no");
+				} else {
+					cnt = 0;
+				}
+			} else {
+				cnt = 0;
+			}
+		} catch (SQLException e) {
+			cnt = 0;
+		} finally {
+			closeDB(conn, pstmt, rs);
+		}
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,21 +170,53 @@ public class Counter extends HttpServlet {
 		out.println("	</body>");
 		out.println("</html>");
 	}
+
+	// 1. Search 'counter' table
+	// 2. if find, update cnt;
+	// 3. else, create table and insert cnt
+	@Override
+	public void destroy() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			int result = findTable("counter");
+
+			conn = makeConnection();
+			
+			if (result == 1) {
+				String sql = "";
+				sql += "update counter ";
+				sql += "set no = " + cnt;
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.executeUpdate();
+			} else {
+				String sql = "";
+				sql += "create table counter ( ";
+				sql += "no number ";
+				sql += ")";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				
+				sql = "";
+				sql += "insert into COUNTER (no) ";
+				sql += "values (" + cnt + ")";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			System.out.println("Fail to store value");
+			e.printStackTrace();
+		} finally {
+			closeDB(conn, pstmt, null);
+		}
+	}
 }
-
-// init() 에서
-// counter 값 얻어오기
-// 1) table이 있다면 cnt 읽어오기
-// 2) table이 없다면 cnt = 0
-
-// destroy() 에서
-// 1) table이 없다면 table 생성 후 저장 (insert into)
-// 2) table이 있다면 저장 (update into)
-
-//create table counter
-//(
-//	no number
-//);
-//
-//insert into counter
-//values (counter);
