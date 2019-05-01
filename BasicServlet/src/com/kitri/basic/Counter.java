@@ -79,7 +79,7 @@ public class Counter extends HttpServlet {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			rs = pstmt.executeQuery(sql);
+			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
 				result = rs.getInt("exist");
