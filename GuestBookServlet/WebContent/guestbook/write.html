@@ -10,7 +10,22 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
+			var reExpName = /^[가-힣]{2,5}$/
 		
+			function writeArticle() {
+				if (document.getElementById("subject").value == "") {
+					alert("제목을 입력하세요.");
+					return;
+				} else if (!reExpName.test(document.getElementById("name").value)) {
+					alert("2 ~ 5글자의 한글을 입력하세요.");
+					return;
+				} else if (document.getElementById("content").value == "") {
+					alert("내용을 입력하세요.");
+				} else {
+					document.getElementById("writeform").action = "/GuestBookServlet/gbwrite";
+					document.getElementById("writeform").submit();
+				}
+			}
 		</script>
 	</head>
 	<body>
