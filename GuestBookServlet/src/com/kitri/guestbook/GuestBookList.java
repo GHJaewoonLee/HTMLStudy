@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/gblist")
 public class GuestBookList extends HttpServlet {
        
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Fail to load Oracle driver");
+		}
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -43,7 +53,8 @@ public class GuestBookList extends HttpServlet {
 			
 			StringBuffer sql = new StringBuffer();
 			sql.append("select * ");
-			sql.append("from guestbook");
+			sql.append("from guestbook ");
+			sql.append("order by seq desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
@@ -55,6 +66,7 @@ public class GuestBookList extends HttpServlet {
 			out.println("			<tr>");
 			out.println("				<td align='right'><a href='/GuestBookServlet/guestbook/write.html'>글쓰기</a></td>");
 			out.println("			</tr>");
+			out.println("		</table>");
 			
 			while(rs.next()) {
 				out.println("		<table class='table table-active'>");

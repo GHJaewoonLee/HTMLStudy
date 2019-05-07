@@ -86,7 +86,8 @@ public class GuestBookWrite extends HttpServlet {
 				
 				StringBuffer sql = new StringBuffer();
 				sql.append("select * ");
-				sql.append("from guestbook");
+				sql.append("from guestbook ");
+				sql.append("order by seq desc");
 				
 				pstmt = conn.prepareStatement(sql.toString());
 				rs = pstmt.executeQuery();

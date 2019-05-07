@@ -1,0 +1,58 @@
+JSP (Java Server Page)
+
+<차이점>
+Servlet (*.java) : HTML in Java  (디자인 구현 시의 불편함)
+JSP (*.jsp) : Java in HTML (실행 시 Servlet으로 변환됨 - 최초에 한 번만 (또는 파일 변경 시))
+
+* Compile 기반 : 기계어로 변환 (수행속도가 빠름), 코드 구현이 불편함, [Servlet, JSP(run)]
+* Script 기반 : 상대적으로 코드 작업이 편함, 수행속도가 느림, [JSP(code), ASP, PHP]
+
+* JSP는 Script/Compile 기반의 장점들을 갖고 있음
+
+
+<Script Element> : <% javacode %>
+	1. 선언부 : JSP에서 사용될 변수, 메소드를 선언하는 영역
+		형식) <%! javacode %>
+			ex) <%! String name;
+					int age;
+					
+					public void func() {
+						...;
+					}
+				%>						
+	
+	2. 처리부 : JSP가 호출 될 때마다 매번 실행되는 영역  ->  service method
+			  request, response 관련...
+		형식) <% javacode %>
+			ex) <% name = request.getParameter("name");
+			
+				   out.println(name);
+				%>
+			  
+	3. 출력부 : client 출력 
+		형식) <%= 문자열 %>  (일반적으로 문자열만 사용 - 단, 함수 결과가 문자열이면 사용은 가능)
+			ex) <%= name %> == <% out.println(name); %>
+
+
+<Directive(지시문)> : <%@ 종류 속성1="값1" 속성2="값2" ... %>
+	1. page
+	
+	2. include
+	
+	3. taglib (tag의 집합)
+--------------------------------------------------------------------------------
+<JSP>
+public class ClassName [servlet] {
+
+	선언부 ( 변수, 메소드() {} )
+	
+	public void service(request, response) {
+		처리부
+		
+		out.println(""); // 출력부(표현식)
+	}
+}
+
+--------------------------------------------------------------------------------
+<디버깅 시 java 파일이 위치한 경로> 
+workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\프로젝트명\org\apache\jsp\*.java
