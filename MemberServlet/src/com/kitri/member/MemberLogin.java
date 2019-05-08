@@ -89,7 +89,7 @@ public class MemberLogin extends HttpServlet {
 		out.println("<html>");
 		out.println("	<body>");
 		if (name != null) {
-			out.println("<stong>" + name + "</strong>님 안녕하세요.");
+			out.println("<strong>" + name + "</strong>님 안녕하세요.");
 		} else {
 			out.println("<font color='red'>");
 			out.println("아이디 또는 비밀번호를 다시 확인하세요.<br>");
