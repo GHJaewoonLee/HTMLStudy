@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/template/header.jsp" %>  
+		<script type="text/javascript" src="<%=root%>/js/httpRequest.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#zipcode').focusin(function() {
@@ -16,8 +17,8 @@
 				if (!reExpName.test(document.getElementById("name").value)) {
 					alert("2 ~ 5글자의 한글을 입력하세요.");
 					return;
-				} else if (!rgExpIDPW.test(document.getElementById("id").value)) {
-					alert("숫자와 영문을 조합한 4 ~ 16자리 사이의 글자를 입력하세요.");
+				} else if (idcount != 0) {
+					alert("아이디 검사를 진행하세요.");
 					return;
 				} else if (!rgExpIDPW.test(document.getElementById("pass").value)) {
 					alert("숫자와 영문을 조합한 4 ~ 16자리 사이의 글자를 입력하세요.");
@@ -26,9 +27,43 @@
 					alert("비밀번호와 비밀번호 확인 값은 일치하여야 합니다.");
 					return;
 				} else {
-					document.getElementById("memberform").action = "<%=root%>/user/register.jsp";
+					document.getElementById("memberform").action = "<%=root%>/user";
 					document.getElementById("memberform").submit();
 				}
+			}
+			
+			var resultView;
+			var idcount = 1;
+			
+			function idcheck() {
+				resultView = document.getElementById("idresult");
+				var searchId = document.getElementById("id").value;
+				
+				if ((searchId.length < 4) || (searchId.length > 16)) {
+					resultView.innerHTML = '<font color="gray">아이디는 4 ~ 16 글자 사이여야 합니다.';
+				} else {
+					var params = "act=idcheck&sid=" + searchId;
+					sendRequest("<%=root%>/user", params, idcheckResult, "GET");
+				}
+			}
+			
+			function idcheckResult() {
+				if (httpRequest.readyState == 4) {
+					if (httpRequest.status == 200) {
+						var result = httpRequest.responseXML;
+						idcount = parseInt(result.getElementsByTagName("cnt")[0].firstChild.data);
+						
+						if (idcount == 0) {
+							resultView.innerHTML = '<font color="steelblue">사용 가능한 아이디입니다.';
+						} else {
+							resultView.innerHTML = '<font color="magenta">이미 사용중인 아이디입니다.';
+						}
+					}/* else {
+						// error page
+					}*/
+				}/* else {
+					
+				}*/
 			}
 		</script>
 	
@@ -36,13 +71,15 @@
 		<div class="col-lg-6" align="center">
 			<h2>회원가입</h2>
 			<form id="memberform" method="post" action="">
+				<input type="hidden" value="register" name="act">
 				<div class="form-group" align="left">
 					<label for="name">이름</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="이름입력">
 				</div>
 				<div class="form-group" align="left">
 					<label for="">아이디</label>
-					<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하">
+					<input type="text" class="form-control" id="id" name="id" onkeyup="javascript:idcheck();" placeholder="4자이상 16자 이하">
+					<div id="idresult"></div>
 				</div>
 				<div class="form-group" align="left">
 					<label for="">비밀번호</label>
@@ -87,7 +124,7 @@
 						<input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="우편번호" size="7" maxlength="5" readonly="readonly">
 						<!--<button type="button" class="btn btn-primary" onclick="javascript:">우편번호</button>-->
 					</div>
-					<input type="text" class="form-control" id="address" name="address" placeholder="">
+					<input type="text" class="form-control" id="address" name="address" placeholder="" readonly="readonly">
 					<input type="text" class="form-control" id="address_detail" name="address_detail" placeholder="">
 				</div>
 				<div class="form-group" align="center">
