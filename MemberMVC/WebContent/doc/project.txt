@@ -58,3 +58,11 @@ MemberMVC
 				loginFail.jsp
 				
 		Index.jsp
+		
+		
+
+-----------------------------------------------------
+HttpSession & Cookie  (store something)
+1. Cookie		: 	client	txt		>>	String
+
+2. HttpSession  : 	server	memory	>>	Object
