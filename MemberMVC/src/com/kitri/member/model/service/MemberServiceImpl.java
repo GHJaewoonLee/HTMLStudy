@@ -80,12 +80,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDetailDto getMember(String id) {
-		return null;
+		return MemberDaoImpl.getMemberDao().getMember(id);
 	}
 
 	@Override
 	public int modifyMember(MemberDetailDto memberDetialDto) {
-		return 0;
+		return MemberDaoImpl.getMemberDao().modifyMember(memberDetialDto);
 	}
 
 	@Override

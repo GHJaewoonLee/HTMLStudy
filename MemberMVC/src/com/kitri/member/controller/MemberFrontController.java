@@ -54,7 +54,11 @@ public class MemberFrontController extends HttpServlet {
 			path = MemberController.getMemberController().deleteMember(request, response);
 			MoveURL.redirect(request, response, path);
 		} else if ("mvmodify".equals(act)) {
-			
+			path = MemberController.getMemberController().showModifyMember(request, response);
+			MoveURL.forward(request, response, path);
+		} else if ("modify".equals(act)) {
+			path = MemberController.getMemberController().modifyMember(request, response);
+			MoveURL.forward(request, response, path);
 		} else if ("main".equals(act)) {
 			MoveURL.redirect(request, response, path);
 		}

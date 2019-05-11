@@ -134,4 +134,45 @@ public class MemberController {
 		
 		return path;
 	}
+
+	public String showModifyMember(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/user/member/memberModify.jsp";
+
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		String id = memberDto.getId();
+		
+		MemberDetailDto memberDetailDto = MemberServiceImpl.getMemberService().getMember(id);
+		session.setAttribute("userDetailInfo", memberDetailDto);
+		
+		return path;
+	}
+
+	public String modifyMember(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/Index.jsp";
+		
+		MemberDetailDto memberDetailDto = new MemberDetailDto();
+		
+		memberDetailDto.setName(request.getParameter("name"));
+		memberDetailDto.setId(request.getParameter("id"));
+		memberDetailDto.setPass(request.getParameter("pass"));
+		memberDetailDto.setEmailid(request.getParameter("emailid"));
+		memberDetailDto.setEmaildomain(request.getParameter("emaildomain"));
+		memberDetailDto.setTel1(request.getParameter("tel1"));
+		memberDetailDto.setTel2(request.getParameter("tel2"));
+		memberDetailDto.setTel3(request.getParameter("tel3"));
+		memberDetailDto.setZipcode(request.getParameter("zipcode"));
+		memberDetailDto.setAddress(request.getParameter("address"));
+		memberDetailDto.setAddressDetail(request.getParameter("address_detail"));
+		
+		int cnt = MemberServiceImpl.getMemberService().modifyMember(memberDetailDto);
+		if (cnt == 2) {
+			request.setAttribute("userDetailInfo", memberDetailDto);
+			path = "/user/member/memberModifyOK.jsp";
+		} else {
+			path = "/user/member/memberModifyFail.jsp";
+		}
+		
+		return path;
+	}
 }

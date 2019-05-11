@@ -208,12 +208,106 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public MemberDetailDto getMember(String id) {
-		return null;
+		MemberDetailDto memberDetailDto = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			
+			sql.append("select * ");
+			sql.append("from member m, member_detail d ");
+			sql.append("where m.id = (?) and m.id = d.id");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				memberDetailDto = new MemberDetailDto();
+				
+				memberDetailDto.setName(rs.getString("name"));
+				memberDetailDto.setId(rs.getString("id"));
+				memberDetailDto.setEmailid(rs.getString("emailid"));
+				memberDetailDto.setEmaildomain(rs.getString("emaildomain"));
+				memberDetailDto.setJoindate(rs.getString("joindate"));
+				memberDetailDto.setZipcode(rs.getString("zipcode"));
+				memberDetailDto.setAddress(rs.getString("address"));
+				memberDetailDto.setAddressDetail(rs.getString("address_detail"));
+				memberDetailDto.setTel1(rs.getString("tel1"));
+				memberDetailDto.setTel2(rs.getString("tel2"));
+				memberDetailDto.setTel3(rs.getString("tel3"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return memberDetailDto;
 	}
 
 	@Override
 	public int modifyMember(MemberDetailDto memberDetialDto) {
-		return 0;
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("update member ");
+			sql.append("set name = ?, pass = ?, emailid = ?, emaildomain = ? ");
+			sql.append("where id = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			int idx = 1;
+			pstmt.setString(idx++, memberDetialDto.getName());
+			pstmt.setString(idx++, memberDetialDto.getPass());
+			pstmt.setString(idx++, memberDetialDto.getEmailid());
+			pstmt.setString(idx++, memberDetialDto.getEmaildomain());
+			pstmt.setString(idx++, memberDetialDto.getId());
+
+			cnt += pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql.delete(0, sql.length());
+			
+			sql.append("update member_detail ");
+			sql.append("set zipcode = ?, address = ?, address_detail = ?, tel1 = ?, tel2 = ?, tel3 = ? ");
+			sql.append("where id = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			idx = 1;
+			pstmt.setString(idx++, memberDetialDto.getZipcode());
+			pstmt.setString(idx++, memberDetialDto.getAddress());
+			pstmt.setString(idx++, memberDetialDto.getAddressDetail());
+			pstmt.setString(idx++, memberDetialDto.getTel1());
+			pstmt.setString(idx++, memberDetialDto.getTel2());
+			pstmt.setString(idx++, memberDetialDto.getTel3());
+			pstmt.setString(idx++, memberDetialDto.getId());
+			
+			cnt += pstmt.executeUpdate();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+		return cnt;
 	}
 
 	@Override
