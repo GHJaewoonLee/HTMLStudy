@@ -218,6 +218,44 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int deleteMember(String id) {
-		return 0;
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("delete from member_detail ");
+			sql.append("where id = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+
+			cnt += pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql.delete(0, sql.length());
+			
+			sql.append("delete from member ");
+			sql.append("where id = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			
+			cnt += pstmt.executeUpdate();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+		return cnt;
 	}
 }

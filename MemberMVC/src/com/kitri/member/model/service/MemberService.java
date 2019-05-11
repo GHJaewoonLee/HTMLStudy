@@ -12,5 +12,5 @@ public interface MemberService {
 	
 	MemberDetailDto getMember(String id);
 	int modifyMember(MemberDetailDto memberDetialDto);		// 0이면 실패, 1이면 성공
-	int deleteMember(String id);							// 0이면 실패, 1이면 성공
+	int deleteMember(String id);							// 0이면 실패, 2이면 성공
 }

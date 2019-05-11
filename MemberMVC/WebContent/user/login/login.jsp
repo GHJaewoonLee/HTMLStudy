@@ -11,7 +11,6 @@
 		for(Cookie c : cookie) {
 			if ("kid_inf".equals(c.getName())) {
 				svid = c.getValue();
-				System.out.println("sdfsdfsdfsd");
 				ckid = "checked";
 				break;
 			}

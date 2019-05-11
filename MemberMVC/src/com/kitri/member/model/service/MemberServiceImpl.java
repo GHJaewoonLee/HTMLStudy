@@ -90,6 +90,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int deleteMember(String id) {
-		return 0;
+		return MemberDaoImpl.getMemberDao().deleteMember(id);
 	}
 }

@@ -115,4 +115,23 @@ public class MemberController {
 		
 		return "/user/login/login.jsp";
 	}
+
+	public String deleteMember(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/Index.jsp";
+		
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		String id = memberDto.getId();
+		
+		int cnt = MemberServiceImpl.getMemberService().deleteMember(id);
+		
+		if (cnt == 2) {
+			session.invalidate();
+			path = "/user/member/memberOutOK.jsp";
+		} else {
+			path = "/user/member/memberOutFail.jsp";
+		}
+		
+		return path;
+	}
 }
