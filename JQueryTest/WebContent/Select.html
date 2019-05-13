@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Select.html</title>
+		<style type="text/css">
+			#engine, #body {
+				display: none;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$("#car").change(function() {
+					var engineObj = $("#div2");
+					var data = '<select id="engine">';
+					
+					// 선택된 객체의 value 속성값 얻기
+					var car = $(this).val();
+					if (car == '소나타') {
+						data += '<option>경유</option>';
+						data += '</select>';
+						
+						engineObj.html(data);
+						
+						var selectObj = engineObj.find("#engine");
+						selectObj.show();
+					} else if (car == '펠리세이드') {
+						data += '<option>가솔린</option>';
+						data += '<option>디젤</option>';
+						data += '</select>';
+						
+						engineObj.html(data);
+						
+						var selectObj = engineObj.find("#engine");
+						selectObj.show();
+					} else {
+						var selectObj = engineObj.find("#engine");
+						selectObj.hide();
+					}
+					
+					// engine 객체의 innerHTML로 data 대입
+					// $("#engine").html(data);
+					
+					// engine 객체 스타일 display를 inline block으로 설정하기
+					// $("#engine").css('display', 'inline-block');
+					// $("#engine").show();
+					
+					// var selectObj = engineObj.children("#engine");
+				});
+				
+				// id가 engine인 객체의 click 이벤트 핸들러
+				// value 속성 값을 경고 창에 출력
+				/*$("#engine").click(function() {
+					alert($(this).val());
+				});*/
+				
+				// 현재는 없지만 향후 추가될 DOM 객체의 이벤트 핸들러 등록방법 : on() 
+				$("#div2").on("click", "#engine", function() {
+					alert($(this).val());
+				})
+			});
+		</script>
+	</head>
+	<body>
+		<div>
+			<!-- 차 종류 -->
+			<select id="car">
+				<option>선택하세요</option>
+				<option>소나타</option> <!-- 경유 -->
+				<option>펠리세이드</option> <!-- 가솔린, 디젤 -->
+			</select>
+		</div>
+
+		<div id="div2">
+			<!-- 엔진 종류
+			<select id="engine">
+			
+			</select> -->
+		</div>
+
+		<div>
+			<!-- 바디 타입 -->
+			<select id="body">
+			
+			</select>
+		</div>
+	</body>
+</html>
