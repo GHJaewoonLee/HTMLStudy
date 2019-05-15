@@ -16,9 +16,11 @@ public class MemberService {
 		}
 
 		if (pass.equals(customer.getPass())) {
-			return "Login Success";
+//			return "Login Success";
+			return "1";
 		} else {
-			return "Login Fail";
+//			return "Login Fail";
+			return "-1";
 		}
 	}
 }
