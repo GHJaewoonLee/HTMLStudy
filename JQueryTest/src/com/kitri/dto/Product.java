@@ -68,4 +68,39 @@ public class Product {
 		return "Product [productNo=" + productNo + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productDetail=" + productDetail + ", productCategory=" + productCategory.toString() + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		
+		result = prime * result + ((productNo == null) ? 0 : productNo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		
+		if (obj == null) {
+			return false;
+		}
+		
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		
+		Product other = (Product) obj;
+		if (productNo == null) {
+			if (other.productNo != null) {
+				return false;
+			}
+		} else if (!productNo.equals(other.productNo)) {
+			return false;
+		}
+		
+		return true;
+	}
 }

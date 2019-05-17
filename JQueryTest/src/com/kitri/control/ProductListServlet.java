@@ -18,8 +18,15 @@ import com.kitri.service.ProductService;
 public class ProductListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private ProductService service;
+	
+	@Override
+	public void init() throws ServletException {
+		service = new ProductService();
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Product> list = new ProductService().findAll();
+		List<Product> list = service.findAll();
 		
 		request.setAttribute("allProduct", list);
 		

@@ -17,9 +17,16 @@ import com.kitri.service.ProductService;
 public class ProductInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private ProductService service;
+	
+	@Override
+	public void init() throws ServletException {
+		service = new ProductService();
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String no = request.getParameter("no");
-		Product product = new ProductService().findByNo(no);
+		Product product = service.findByNo(no);
 		
 		request.setAttribute("productInfo", product);
 		

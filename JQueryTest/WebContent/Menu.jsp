@@ -6,7 +6,8 @@
 	<li><a href="user/login.html">로그인</a></li>
 	<li><a href="user/member.html">회원가입</a></li>
 	<%} else {%>
-	<li><a href="productlist">상품조회</a></li>
 	<li><a href="logout">로그아웃</a></li>
 	<%}%>
+	<li><a href="productlist">상품조회</a></li>
+	<li><a href="viewCart">장바구니 보기</a></li>
 </ul>

@@ -17,7 +17,7 @@ $(function(){
 			//$(this).find("attributes");
 			success: function (result) {
 				//location.href='productInfoResult.jsp';
-				$("section").html(result.trim())
+				$("section").html(result.trim());
 			}
 		});
 		return false;
