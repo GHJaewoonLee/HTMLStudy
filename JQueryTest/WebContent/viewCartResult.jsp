@@ -4,6 +4,24 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
 <%@page import="com.kitri.dto.Product"%>
+
+<script>
+	var btnAddOrder = $("div.viewCartResult>table tr>td>button.addOrder");
+	btnAddOrder.click(function() {
+		$.ajax({
+			url : "addOrder",
+			method : "get",
+			success : function (result) {
+				if (result.trim() == '1') {
+					alert("Order success");
+				} else {
+					alert("Order fail");
+				}
+			}
+		});
+		return false;
+	});
+</script>
     
 <%
 	Map<Product, Integer> map = (Map<Product, Integer>) request.getAttribute("requestCart");

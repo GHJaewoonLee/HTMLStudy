@@ -51,3 +51,38 @@ prod_no			prod_name			prod_price			prod_detail			prod_category
 		sql) SELECT category_no, sum(prod_price)
 			 FROM product p JOIN product_category pc ON p.prod_category = pc.category_no
 			 GROUP BY category_no;
+			 
+--------------------------------------------------------------------------------------------
+<정규화>
+	1. 개요 : 테이블 내에서 중복되는 데이터를 최소화하기 위해, 테이블을 분리  
+
+<Order>
+	주문정보 (주문번호, 주문자ID, 주문시간)
+	
+	주문상세 (주문번호, 주문상품번호, 주문수량)
+
+	
+order_info
+
+(PK)			(NN)
+order_no		order_id		order_time
+(number)		(varchar2(16))	(date : sysdate)
+--------		=============
+------------------------------------------------
+
+
+order_detail
+
+(PK)			(FK)				(NN)
+order_no		order_prod_no		order_quatity
+(number)		(varchar2(5))		(number(3))
+--------		=============
+-------------------------------------------------
+
+
+<시나리오>
+	1. ID에 해당하는 주문내역 보기 (주문번호 주문일자 상품번호 상품명 가격 주문수량)
+		sql) SELECT info.order_no, order_time, prod_no, prod_name, prod_price, order_quantity
+			 FROM order_info info JOIN order_detail detail ON info.order_no = detail.order_no JOIN product p ON p.prod_no = detail.order_prod_no
+			 WHERE order_id = 'qwe'
+		     ORDER BY order_time DESC, prod_no;

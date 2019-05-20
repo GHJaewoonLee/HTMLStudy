@@ -10,4 +10,7 @@
 	<%}%>
 	<li><a href="productlist">상품조회</a></li>
 	<li><a href="viewCart">장바구니 보기</a></li>
+	<%if (id != null) {%>
+	<li><a href="viewOrder">주문내역 보기</a></li>
+	<%}%>
 </ul>
