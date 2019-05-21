@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Scope.html</title>
+		<script>
+			var a;
+			
+			console.log(typeof(a));	// undefined
+			console.log(a + 1);		// NaN
+			
+			var a = 10;				// overwrite
+			console.log(a);
+			
+			var b = function () {
+				var local = 'hello';
+				global = "javascript"
+				
+				for (var i = 0; i < a; i++) {
+					console.log(i + ", " + local + ", " + global);
+				}
+				
+				console.log("In function local = " + local);
+				console.log("In function i = " + i);
+				console.log("In function global = " + global);
+			}
+			
+			console.log(typeof(b));	// function
+			console.log(b);
+			b();
+			
+// 			console.log("Out function local = " + local);	// error
+			console.log("Out function global = " + global);	// ok
+		</script>
+		<script>
+			window.addEventListener("load", function() {
+				var arr = document.querySelectorAll("button");
+				
+				for (var i = 0; i < arr.length; i++) {
+					var btnObj = arr[i];
+					
+					(
+						function(j) {
+							btnObj.addEventListener("click", function(){
+								// alert(j + " button clicked");
+								
+								var first = parseInt(document.querySelector("input[name=a]").value);
+								var second = parseInt(document.querySelector("input[name=b]").value);
+								
+								switch (j) {
+									case 1 : alert(first + second); break;
+									case 2 : alert(first - second); break;
+									case 3 : alert(first * second); break;
+									case 4 : alert(first / second); break;
+								}
+							});
+						}
+					)(i + 1);
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<input type="text" name="a">
+		<input type="text" name="b"><br>
+		<button>+</button>
+		<button>-</button>
+		<button>*</button>
+		<button>/</button>
+	</body>
+</html>

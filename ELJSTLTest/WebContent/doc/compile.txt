@@ -1,0 +1,10 @@
+src\test\A.java
+
+package test;
+public class A {
+	main()...
+}
+
+
+cmd) javac -d bin src\test\A.java
+cmd) java -cp bin;ojdbc6.jar

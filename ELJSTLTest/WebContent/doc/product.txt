@@ -1,0 +1,88 @@
+product_category
+
+(PK)			(NN)
+category_no		category_name
+(char(1))		(varchar2(30))
+------
+--------------------------
+D				음료
+F				음식
+G				상품
+
+
+product
+
+(PK)			(NN)				(NN, CHK : >= 0)						(FK, NN)
+prod_no			prod_name			prod_price			prod_detail			prod_category
+(varchar2(5))	(varchar2(30))		(number(5))			(varchar2(50))		(char(1))
+           		------														===
+------------------------------------------------------------------------------------------
+001				아메리카노				2500				커피의 한 종류			D
+002				아이스 아메리카노		2500				시원함				D
+003				라떼					3000				우유가 들어갔음			D
+004				치즈케이크				4000				한 끼 식사				F
+
+
+
+<JOIN>
+	1. natural join
+	2. JOIN ~ USING
+	3. JOIN ~ ON
+
+
+<시나리오>
+	1. 전체 상품목록 검색 (카테고리 번호로 오름차순 정렬)
+		sql) SELECT category_no, category_name, prod_no, prod_name, prod_price, prod_detail
+			 FROM product p JOIN product_category pc ON p.prod_category = pc.category_no
+			 ORDER BY category_no, prod_name;
+	
+	2. 카테고리에 해당하는 삼품목록
+		sql) SELECT category_no, category_name, prod_no, prod_name, prod_price, prod_detail
+			 FROM product p JOIN product_category pc ON p.prod_category = pc.category_no
+			 WHERE category_no = 'D'
+			 ORDER BY prod_name;
+			 
+	3. 'D' 카테고리에 해당하는 총상품가격을 출력
+		sql) SELECT sum(prod_price)
+			 FROM product p JOIN product_category pc ON p.prod_category = pc.category_no
+			 WHERE category_no = 'D';
+	
+	4. 카테고리별 총 상품가격을 출력
+		sql) SELECT category_no, sum(prod_price)
+			 FROM product p JOIN product_category pc ON p.prod_category = pc.category_no
+			 GROUP BY category_no;
+			 
+--------------------------------------------------------------------------------------------
+<정규화>
+	1. 개요 : 테이블 내에서 중복되는 데이터를 최소화하기 위해, 테이블을 분리  
+
+<Order>
+	주문정보 (주문번호, 주문자ID, 주문시간)
+	
+	주문상세 (주문번호, 주문상품번호, 주문수량)
+
+	
+order_info
+
+(PK)			(NN)
+order_no		order_id		order_time
+(number)		(varchar2(16))	(date : sysdate)
+--------		=============
+------------------------------------------------
+
+
+order_detail
+
+(PK)			(FK)				(NN)
+order_no		order_prod_no		order_quatity
+(number)		(varchar2(5))		(number(3))
+--------		=============
+-------------------------------------------------
+
+
+<시나리오>
+	1. ID에 해당하는 주문내역 보기 (주문번호 주문일자 상품번호 상품명 가격 주문수량)
+		sql) SELECT info.order_no, order_time, prod_no, prod_name, prod_price, order_quantity
+			 FROM order_info info JOIN order_detail detail ON info.order_no = detail.order_no JOIN product p ON p.prod_no = detail.order_prod_no
+			 WHERE order_id = 'qwe'
+		     ORDER BY order_time DESC, prod_no;

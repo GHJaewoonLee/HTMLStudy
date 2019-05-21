@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	</head>
+	<script>
+		$(function(){
+			var submitObj = $("input[type=submit]");
+			submitObj.click(function(){
+				alert("Caution");
+			});
+			
+			var formObj = $("form");
+			formObj.submit(function(){
+				var tObj = $("input[name=t]");
+				
+				if (tObj.val().trim().length == 0) {
+					alert("Write");
+					tObj.focus();
+					return false;
+				} else {
+					alert("Submit");
+					formObj.attr("action", "http://www.naver.com");
+					formObj.attr("method", "post");
+				}
+			});
+		});
+	
+// 		window.addEventListener("load", function(){
+// 			// DOM tree에서 input 태그 중 type 속성값이 submit인 객체 찾기
+// 			var submitObj = document.querySelector("input[type=submit]");
+			
+// 			// submitObj에서 클릭 이벤트 핸들러
+// 			// 경고창 띄우기
+// 			submitObj.addEventListener("click", function(){
+// 				alert("Caution");
+// 			});
+			
+// 			// DOM tree에서 form 객체 찾기
+// 			var formObj = document.querySelector("form");
+			
+// 			formObj.addEventListener("submit", function(event){
+// 				// 유효성 검사
+// 				var tObj = document.querySelector("input[name=t]");
+				
+// 				if (tObj.value.trim().length == 0) {
+// 					alert("Write");
+// 					tObj.focus();
+// 					event.preventDefault();
+// 				} else {
+// 					alert("Submit");
+// 				}
+// 			});
+// 		});
+	</script>
+	<body>
+		<form action="http://www.google.com">
+			<input name="t"><br>
+			<input type="password" name="p"><br>
+			<input type="checkbox" name="c" value="1">One&nbsp;&nbsp;
+			<input type="checkbox" name="c" value="2">Two&nbsp;&nbsp;
+			<input type="checkbox" name="c" value="3">Three<br>
+			<select name="s">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<input type="submit" value="전송1">
+			<input type="button" value="버튼1">
+			<button>전송2</button>
+		</form>
+		<button>버튼2</button>
+	</body>
+</html>
