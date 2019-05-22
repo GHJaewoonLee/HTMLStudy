@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script>
 	$(function() {
 		var buttons = $("div.addCartResult>button");
@@ -17,13 +19,11 @@
 	});
 </script>
 
-<%
-	String no = (String) request.getAttribute("no");
-	String quantity = (String) request.getAttribute("quantity");
-%>
+<c:set var="no" value="${requestScope.no}"/>
+<c:set var="quantity" value="${requestScope.quantity}"/>
 
 <div class="addCartResult" style="position: absolute; top: 350px; left: 150px; width: 400px; border: 1px solid;">
-	상품번호가 <%=no%>인 상품 <%=quantity%>개를 장바구니에 넣기 성공<br>
+	상품번호가 ${no}인 상품 ${quantity}개를 장바구니에 넣기 성공<br>
 	<button>상품목록으로 가기</button>
 	<button>장바구니 보기</button>
 </div>

@@ -27,5 +27,7 @@
 		
 		<%-- EL의 문제점 : 반복문을 처리할 수 없음 --%>
 		<%-- 해결방법 : JSTL 사용 --%>
+		<hr>
+		웹컨텍스트 이름 : ${pageContext.request.contextPath}
 	</body>
 </html>
