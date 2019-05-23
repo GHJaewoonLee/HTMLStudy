@@ -1,0 +1,27 @@
+SELECT 처리 순서
+<------------- SELECTION ------------><-- PRESENTATION -->
+FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY
+
+
+SELECT rownum, board_seq, to_char(board_date, 'hh:mm:ss')
+FROM (SELECT board_seq, board_date
+	  FROM repboard
+	  ORDER BY board_date desc)
+WHERE rownum between 1 and 4;
+
+SELECT *
+FROM (SELECT rownum r, board_seq, to_char(board_date, 'hh:mm:ss')
+	  FROM (SELECT board_seq, board_date
+	        FROM repboard
+	        ORDER BY board_date desc))
+WHERE r between 5 and 8;
+
+-----------------------------------------------------------------
+
+SELECT *
+FROM (SELECT rownum r, board_seq, parent_seq, to_char(board_date, 'hh:mm:ss')
+	  FROM repboard
+	  START WITH parent_seq = 0
+	  CONNECT BY PRIOR board_seq = parent_seq
+	  ORDER SIBLINGS BY board_seq desc)
+WHERE r between 5 and 8;
