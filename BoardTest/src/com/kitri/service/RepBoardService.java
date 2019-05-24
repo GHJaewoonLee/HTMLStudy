@@ -1,6 +1,7 @@
 package com.kitri.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.kitri.dao.RepBoardDAO;
 import com.kitri.dto.RepBoard;
@@ -25,5 +26,17 @@ public class RepBoardService {
 		}
 		
 		boardDAO.insert(repBoard);
+	}
+	
+	public List<RepBoard> findByRows(int startRow, int endRow) {
+		return boardDAO.selectByRows(startRow, endRow);
+	}
+
+	public int getTotalCount() {
+		return boardDAO.selectTotalCount();
+	}
+
+	public RepBoard findBySequence(int seq) {
+		return boardDAO.selectBySequence(seq);
 	}
 }

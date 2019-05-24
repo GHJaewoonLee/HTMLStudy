@@ -40,6 +40,7 @@
 			<ul>
 				<li><a href="write.html">글쓰기</a>
 				<li><a href="boardlist">글목록</a>
+				<li><a href="upload.html">파일 업로드</a>
 			</ul>
 		</nav>
 		<section>

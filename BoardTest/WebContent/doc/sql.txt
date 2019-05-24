@@ -25,3 +25,18 @@ FROM (SELECT rownum r, board_seq, parent_seq, to_char(board_date, 'hh:mm:ss')
 	  CONNECT BY PRIOR board_seq = parent_seq
 	  ORDER SIBLINGS BY board_seq desc)
 WHERE r between 5 and 8;
+
+
+SELECT *
+FROM (SELECT rownum r, repboard.*
+	  FROM repboard
+	  START WITH parent_seq = 0
+	  CONNECT BY PRIOR board_seq = parent_seq 
+	  ORDER SIBLINGS BY board_seq DESC)
+WHERE r between 1 and 10;
+
+------------------------------------------------------------------
+계층형 구조 Level 클래스 사용 (원글 : 1, 답글 : 2, 답글의 답글 : 3, ...)
+
+------------------------------------------------------------------
+orelly jar
